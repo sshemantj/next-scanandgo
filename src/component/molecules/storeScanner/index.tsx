@@ -98,6 +98,7 @@ const StoreScanner = () => {
           open,
           setOpen,
           onClose,
+          isHomeScreen: true,
           drawerStyles: {
             height: "30vh",
           },

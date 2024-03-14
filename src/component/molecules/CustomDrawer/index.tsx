@@ -13,6 +13,7 @@ interface Props {
   onClose: () => void;
   drawerStyles?: any;
   drawerBleeding?: number;
+  isHomeScreen?: boolean;
 }
 
 const Root = styled("div")(({ theme }) => ({
@@ -46,6 +47,7 @@ const CustomDrawer = (props: Props) => {
     onClose,
     drawerStyles = {},
     drawerBleeding = 0,
+    isHomeScreen = false,
   } = props;
 
   const onOpen = () => () => {
@@ -62,8 +64,8 @@ const CustomDrawer = (props: Props) => {
         styles={{
           ".MuiDrawer-root > .MuiPaper-root": {
             overflow: "visible",
-            borderTopLeftRadius: 12,
-            borderTopRightRadius: 12,
+            borderTopLeftRadius: isHomeScreen ? 40 : 12,
+            borderTopRightRadius: isHomeScreen ? 40 : 12,
             ...drawerStyles,
           },
         }}
@@ -84,8 +86,8 @@ const CustomDrawer = (props: Props) => {
           sx={{
             position: "absolute",
             top: -drawerBleeding,
-            borderTopLeftRadius: 12,
-            borderTopRightRadius: 12,
+            borderTopLeftRadius: isHomeScreen ? 40 : 12,
+            borderTopRightRadius: isHomeScreen ? 40 : 12,
             visibility: "visible",
             right: 0,
             left: 0,
@@ -99,8 +101,8 @@ const CustomDrawer = (props: Props) => {
             pb: 2,
             height: "100%",
             overflow: "auto",
-            borderTopLeftRadius: 12,
-            borderTopRightRadius: 12,
+            borderTopLeftRadius: isHomeScreen ? 40 : 12,
+            borderTopRightRadius: isHomeScreen ? 40 : 12,
           }}
         >
           {children}
