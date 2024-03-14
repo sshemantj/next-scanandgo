@@ -36,8 +36,17 @@
 
 #html5qr-code-full-region__2 {
   border: none !important;
+  &::after {
+    content: "";
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
   #qr-shaded-region {
-    // border-width: 290px 260px !important;
+    border-color: transparent !important;
     div {
       background-color: transparent !important;
     }
@@ -46,6 +55,7 @@
       top: -35px;
       left: -30px;
       content: url("./border-updated.png");
+      z-index: 1;
     }
   }
   #html5qr-code-full-region__2__header_message {
