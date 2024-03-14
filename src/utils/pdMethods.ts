@@ -5,6 +5,8 @@ const handleAddProduct = (
   productList: IProduct[]
 ): IProduct[] => {
   const updatedProductList: IProduct[] = [...productList];
+  console.log({ updatedProductList, productToAdd });
+
   const existingProductIndex = updatedProductList.findIndex(
     (product) => product.id === productToAdd.id
   );
@@ -25,6 +27,7 @@ const handleDecraseQuantiy = (
   productList: IProduct[]
 ): IProduct[] => {
   const updatedProductList: IProduct[] = [...productList];
+  console.log({ updatedProductList, id });
   const existingProductIndex = updatedProductList.findIndex(
     (product) => product.id === id
   );
