@@ -19,7 +19,7 @@ const ScannedItemScreen = () => {
   };
 
   const handleCheckout = () => {
-    const isLogin = false;
+    const isLogin = true;
     if (isLogin) {
       router.push(processScreenRoutes.PROCESS_SUMMARY_SCREEN);
     } else {
