@@ -14,7 +14,7 @@ const drawerBleeding = 0;
 
 const ScannerScreen = () => {
   const [currentText, setCurrentText] = useState<string>("");
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const [disabled, setDisabled] = useState(true);
   const ref = useRef<Html5QrcodeScanner | null>(null);
   const dispatch = useAppDispatch();
