@@ -5,7 +5,7 @@ import { Html5QrcodeScanner } from "html5-qrcode";
 import { processScreenRoutes } from "@/constants/allRoutes";
 import { useRouter } from "next/router";
 import useWithinRadius from "@/hooks/useWithinRadius";
-import CustomDrawer from "../CustomDrawer";
+// import CustomDrawer from "../CustomDrawer";
 import styles from "./storeScanner.module.scss";
 import CustomButton from "@/component/atoms/customButton";
 
@@ -27,7 +27,6 @@ const StoreScanner = () => {
   const ref = useRef<Html5QrcodeScanner | null>(null);
   const router = useRouter();
   const [distance, setDistance] = useState<number>(200);
-  const [open, setOpen] = useState(true);
   const [disabled, setDisabled] = useState(true);
   const [storeLocation, setStoreLocation] =
     useState<IStoreLocation>(initialLocationValue);
@@ -73,10 +72,6 @@ const StoreScanner = () => {
     handleStartCamera();
   }, []);
 
-  const onClose = () => () => {
-    setOpen(false);
-  };
-
   const handleScanNow = () => {
     router.push(processScreenRoutes.PROCESS_SCANNER_SCREEN);
   };
@@ -95,33 +90,21 @@ const StoreScanner = () => {
           showZoomSliderIfSupported={true}
         />
       </div>
-      <CustomDrawer
-        {...{
-          open,
-          setOpen,
-          onClose,
-          isHomeScreen: true,
-          drawerStyles: {
-            height: "30vh",
-          },
-        }}
-      >
-        <div className={styles.scanNowWrapper}>
-          <p>
-            Scan Shoppers Stop Store <br /> QR Code To Start Shopping
-          </p>
-          <div className={styles.buttonWrapper}>
-            <CustomButton
-              onClick={() => handleScanNow()}
-              disabled={disabled}
-              style={{ padding: "0.5rem 2rem" }}
-              variant="dark"
-            >
-              SCAN NOW
-            </CustomButton>
-          </div>
+      <div className={styles.scanNowWrapper}>
+        <p>
+          Scan Shoppers Stop Store <br /> QR Code To Start Shopping
+        </p>
+        <div className={styles.buttonWrapper}>
+          <CustomButton
+            onClick={() => handleScanNow()}
+            disabled={disabled}
+            style={{ padding: "0.5rem 2rem" }}
+            variant="dark"
+          >
+            SCAN NOW
+          </CustomButton>
         </div>
-      </CustomDrawer>
+      </div>
       <ToastContainer autoClose={3000} />
     </div>
   );
