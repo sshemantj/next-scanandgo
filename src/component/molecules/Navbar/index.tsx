@@ -49,14 +49,14 @@ const Navbar = ({ showBackBtn = false }: INavbar) => {
     <nav className={styles.navWrapper}>
       <div className={styles.container}>
         <div className={styles.lhsWrapper}>
-          {isShowNav || (
+          {!isShowNav ? (
             <div
               className={styles["menu-icon"]}
               onClick={() => handleShowNavbar()}
             >
               <Image src={hamsvg} alt="hamberger" width={20} height={20} />
             </div>
-          )}
+          ) : null}
           <div className={styles.logo}>
             {isShowNav ? (
               <Button
