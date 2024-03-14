@@ -37,14 +37,15 @@
 #html5qr-code-full-region__2 {
   border: none !important;
   #qr-shaded-region {
+    border-width: 290px 260px !important;
     div {
-      // background-color: transparent !important;
+      background-color: transparent !important;
     }
     &::before {
       position: absolute;
-      top: -35px;
+      top: -100px;
       left: -30px;
-      content: url("./border.png");
+      content: url("./border-updated.png");
     }
   }
   #html5qr-code-full-region__2__header_message {
