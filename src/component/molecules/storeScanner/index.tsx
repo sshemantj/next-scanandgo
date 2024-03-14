@@ -4,10 +4,10 @@ import { ToastContainer, toast } from "react-toastify";
 import { Html5QrcodeScanner } from "html5-qrcode";
 import { processScreenRoutes } from "@/constants/allRoutes";
 import { useRouter } from "next/router";
-import { Button, Grid } from "@mui/material";
 import useWithinRadius from "@/hooks/useWithinRadius";
-import styles from "./storeScanner.module.scss";
 import CustomDrawer from "../CustomDrawer";
+import styles from "./storeScanner.module.scss";
+import CustomButton from "@/component/atoms/customButton";
 
 interface IStoreLocation {
   latitude: number | null;
@@ -28,6 +28,7 @@ const StoreScanner = () => {
   const router = useRouter();
   const [distance, setDistance] = useState<number>(200);
   const [open, setOpen] = useState(true);
+  const [disabled, setDisabled] = useState(true);
   const [storeLocation, setStoreLocation] =
     useState<IStoreLocation>(initialLocationValue);
   const { isWithinRadius, setIsWithinRadius, setStoreDetailsSetup } =
@@ -48,10 +49,7 @@ const StoreScanner = () => {
   useEffect(() => {
     if (isWithinRadius) {
       toast.success(`Store qr-code scan successfull!`);
-      setTimeout(
-        () => router.push(processScreenRoutes.PROCESS_SCANNER_SCREEN),
-        1500
-      );
+      setDisabled(false);
     }
     if (isWithinRadius === false) {
       toast.error(`Store is not within ${distance}m range!`);
@@ -79,6 +77,10 @@ const StoreScanner = () => {
     setOpen(false);
   };
 
+  const handleScanNow = () => {
+    router.push(processScreenRoutes.PROCESS_SCANNER_SCREEN);
+  };
+
   return (
     <div className={styles.storeScannerContainer}>
       <div className={styles.qrCodeScanWrapper}>
@@ -104,7 +106,21 @@ const StoreScanner = () => {
           },
         }}
       >
-        <div className={styles.customDrawerContainer}></div>
+        <div className={styles.scanNowWrapper}>
+          <p>
+            Scan Shoppers Stop Store <br /> QR Code To Start Shopping
+          </p>
+          <div className={styles.buttonWrapper}>
+            <CustomButton
+              onClick={() => handleScanNow()}
+              disabled={disabled}
+              style={{ padding: "0.5rem 2rem" }}
+              variant="dark"
+            >
+              SCAN NOW
+            </CustomButton>
+          </div>
+        </div>
       </CustomDrawer>
       <ToastContainer autoClose={3000} />
     </div>
