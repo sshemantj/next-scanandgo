@@ -1,28 +1,18 @@
-import * as React from "react";
+import React from "react";
 import { Global } from "@emotion/react";
 import { styled } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { grey } from "@mui/material/colors";
-import Button from "@mui/material/Button";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
-import { Grid } from "@mui/material";
-import { useAppDispatch } from "@/store/hooks";
-import { addProduct } from "@/store/slices/processSlice";
-import { useRouter } from "next/router";
-import { processScreenRoutes } from "@/constants/allRoutes";
-import styles from "./customDrawer.module.scss";
-import { Html5QrcodeScanner } from "html5-qrcode";
 
 const drawerBleeding = 0;
 
 interface Props {
   open: boolean;
-  data: string;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  setCurrentText: React.Dispatch<React.SetStateAction<string>>;
-  handleAddProduct: () => void;
   window?: () => Window;
-  camRef: React.MutableRefObject<Html5QrcodeScanner | null>;
+  children: JSX.Element;
+  onClose: () => void;
 }
 
 const Root = styled("div")(({ theme }) => ({
@@ -48,16 +38,7 @@ const Puller = styled("div")(({ theme }) => ({
 }));
 
 const CustomDrawer = (props: Props) => {
-  const { window, open, setOpen, data, setCurrentText, handleAddProduct } =
-    props;
-
-  const dispatch = useAppDispatch();
-  const router = useRouter();
-
-  const onClose = () => () => {
-    props.camRef.current?.resume();
-    setOpen(false);
-  };
+  const { window, open, setOpen, children, onClose } = props;
 
   const onOpen = () => () => {
     setOpen(true);
@@ -65,12 +46,6 @@ const CustomDrawer = (props: Props) => {
 
   const container =
     window !== undefined ? () => window().document.body : undefined;
-
-  const resetAndScanAgain = () => {
-    setCurrentText("");
-    props.camRef.current?.resume();
-    setOpen(false);
-  };
 
   return (
     <Root>
@@ -89,7 +64,7 @@ const CustomDrawer = (props: Props) => {
         container={container}
         anchor="bottom"
         open={open}
-        onClose={onClose()}
+        onClose={() => onClose()}
         onOpen={onOpen()}
         swipeAreaWidth={drawerBleeding}
         disableSwipeToOpen={true}
@@ -120,28 +95,7 @@ const CustomDrawer = (props: Props) => {
             borderTopRightRadius: 12,
           }}
         >
-          <div className={styles.customDrawerContainer}>
-            <div className={styles.drawerInner}>
-              <h3 className={styles.pdName}>Current product: {data}</h3>
-              <div className={styles.btnWrapper}>
-                <Button
-                  className={styles.addProductBtn}
-                  onClick={() => handleAddProduct()}
-                  variant="contained"
-                >
-                  ADD Product
-                </Button>
-                <Button
-                  className={styles.resetAndScanAgain}
-                  onClick={() => resetAndScanAgain()}
-                  variant="contained"
-                  color="error"
-                >
-                  Cancel
-                </Button>
-              </div>
-            </div>
-          </div>
+          {children}
         </StyledBox>
       </SwipeableDrawer>
     </Root>
