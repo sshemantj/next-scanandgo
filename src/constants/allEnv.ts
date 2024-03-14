@@ -1,3 +1,13 @@
-const API_BASE_URL = "";
+const NODE_ENV = process.env.NODE_ENV;
+const API_BASE_URL = process.env.API_BASE_URL;
+const GRAPH_BASE_URL = process.env.GRAPH_BASE_URL;
 
-export { API_BASE_URL };
+const NEXT_PUBLIC_SSO_API_GATEWAY_URL =
+  process.env.NEXT_PUBLIC_SSO_API_GATEWAY_URL;
+
+export {
+  NODE_ENV,
+  API_BASE_URL,
+  GRAPH_BASE_URL,
+  NEXT_PUBLIC_SSO_API_GATEWAY_URL,
+};

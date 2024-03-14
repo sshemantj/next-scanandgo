@@ -1,5 +1,5 @@
 import axios from "axios";
-import { API_BASE_URL } from "../constants/allEnv";
+import { API_BASE_URL } from "../../constants/allEnv";
 
 export const axiosPrivate = axios.create({
   baseURL: API_BASE_URL,
