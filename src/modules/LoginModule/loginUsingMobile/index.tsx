@@ -44,45 +44,45 @@ const LoginUsingMobile = () => {
   const { getItem } = useStorage();
   const cookie = new Cookies();
 
-  const ResendOtp = async () => {
-    const apiResponse = await loginWithOtpAPI(getItem("mobileNumber", "local"));
+  // const ResendOtp = async () => {
+  //   const apiResponse = await loginWithOtpAPI(getItem("mobileNumber", "local"));
 
-    const { status, response }: any = apiResponse;
+  //   const { status, response }: any = apiResponse;
 
-    if (status === "success") {
-      const { otpSent, errorCode, errorMessage } = response?.data?.loginWithOtp;
+  //   if (status === "success") {
+  //     const { otpSent, errorCode, errorMessage } = response?.data?.loginWithOtp;
 
-      if (otpSent === true) {
-        setResendOtp((v) => !v);
-        setResendMes(true);
-        // setSnackBarOpen(true);
-        setCounter(30);
-        // setResetOtpFields((value) => !value);
-        // triggerGAEvent(
-        //   {
-        //     link_text: "edit",
-        //     link_url: "na",
-        //     widget_description: "Resend",
-        //   },
-        //   "hyperlink",
-        //   "signindetailpage",
-        //   "SSO"
-        // );
-        // setNetworkError(false);
-      }
-      if (
-        errorCode.toLowerCase() === "maxresendattemptsreachedotperror" ||
-        errorCode.toLowerCase() === "maxverificationattemptsreachedotperror"
-      ) {
-        // setOtpErrorSnackBarOpen(true);
-        // setSnackBarMessage(errorMessage);
-      }
-    }
-    if (status === "fail") {
-      // setNetworkError(true);
-      // setNetworkError("Network Error");
-    }
-  };
+  //     if (otpSent === true) {
+  //       setResendOtp((v) => !v);
+  //       setResendMes(true);
+  //       // setSnackBarOpen(true);
+  //       setCounter(30);
+  //       // setResetOtpFields((value) => !value);
+  //       // triggerGAEvent(
+  //       //   {
+  //       //     link_text: "edit",
+  //       //     link_url: "na",
+  //       //     widget_description: "Resend",
+  //       //   },
+  //       //   "hyperlink",
+  //       //   "signindetailpage",
+  //       //   "SSO"
+  //       // );
+  //       // setNetworkError(false);
+  //     }
+  //     if (
+  //       errorCode.toLowerCase() === "maxresendattemptsreachedotperror" ||
+  //       errorCode.toLowerCase() === "maxverificationattemptsreachedotperror"
+  //     ) {
+  //       // setOtpErrorSnackBarOpen(true);
+  //       // setSnackBarMessage(errorMessage);
+  //     }
+  //   }
+  //   if (status === "fail") {
+  //     // setNetworkError(true);
+  //     // setNetworkError("Network Error");
+  //   }
+  // };
 
   useEffect(() => {
     const timer: any =
@@ -93,159 +93,174 @@ const LoginUsingMobile = () => {
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
-
-    // if (isMobileNumber(value)) {
-    //   setUserName(value);
-    // }
-    value?.length <= 10 && Number(value[0]) > 5
-      ? setUserName(Math.max(0, parseInt(value)).toString().slice(0, 10))
-      : value?.length == 0 && setUserName("");
-
-    if (value?.length == 0) {
-      setError(false);
-    } else if (value?.length < 10) {
-      setError(true);
-      setHelperText("Phone number should be a valid number of 10 digits");
-      setIsDisabled(true);
-    } else {
-      setError(false);
+    if (value?.length <= 10) {
+      setUserName(value);
+    }
+    if (value?.length >= 10) {
       setIsDisabled(false);
-    }
-  };
-
-  const handleProceed = async () => {
-    // router.push(processScreenRoutes.);
-
-    if (isEmailID(username)) {
-      let SignInProcced = SignInProccess();
-      setError(false);
-      // getIsEmail(true);
-      localStorage.setItem("Email", username);
-      (SignInProcced.page_title = "signindetailpage"),
-        (SignInProcced.page_type = "SSO"),
-        (SignInProcced.page_path = window?.location?.pathname),
-        (SignInProcced.platform =
-          window?.innerWidth > 768 ? "PWA" : "MobilePWA"),
-        (SignInProcced.method = "email");
-      (SignInProcced.link_url = "na"), (SignInProcced.link_text = "email");
-      SignInProcced.outbound = false;
-      SignInProcced.jounry_type = "signIn";
-      SignInProcced.status = "valid";
-      let SignInProceed = {
-        ...SignInProcced,
-        user_info_hash: CryptoJS.MD5(username),
-        page_referrer: getItem("previousPagePath", "local"),
-        page_referrer_title: getItem("previousPageTitle", "local"),
-        platform: window?.innerWidth > 768 ? "PWA" : "MobilePWA",
-        customer_id: getItem("customerID", "local")
-          ? getItem("customerID", "local")
-          : cookie.get("MADid"),
-        msd_user_id: getItem("customerID", "local")
-          ? getItem("customerID", "local")
-          : "",
-        page_path: window?.location?.href,
-        page_type: "SSO",
-        loyalty_level: getItem("loyalitylevel", "local")
-          ? getItem("loyalitylevel", "local")
-          : "",
-        user_mail_id: CryptoJS.MD5(username),
-        user_phone_number: username,
-      };
-      const param = { params: SignInProceed, action: "signin_proceed" };
-      event(param);
-    } else if (isMobileNumber(username)) {
-      setError(false);
-      let SignInProcced = SignInProccess();
-      (SignInProcced.page_title = "signindetailpage"),
-        localStorage.setItem("mobileNumber", username);
-      SignInProcced.method = "mobile";
-      (SignInProcced.link_url = "na"), (SignInProcced.link_text = "PROCEED");
-      SignInProcced.outbound = false;
-      SignInProcced.jounry_type = "signin";
-      SignInProcced.status = "valid";
-      let SignInProceed = {
-        ...SignInProcced,
-        user_info_hash: CryptoJS.MD5(username),
-        page_referrer:
-          JSON?.parse(localStorage?.getItem("pageReferrer") as string)?.[
-            JSON?.parse(localStorage?.getItem("pageReferrer") as string)
-              ?.length - 2
-          ]?.previousPagePath || "na",
-        page_referrer_title:
-          JSON.parse(localStorage?.getItem("pageReferrer") as string)?.[
-            JSON?.parse(localStorage?.getItem("pageReferrer") as string)
-              ?.length - 2
-          ]?.previousPageTitle || "na",
-        platform: window?.innerWidth > 768 ? "PWA" : "MobilePWA",
-        customer_id: getItem("customerID", "local")
-          ? getItem("customerID", "local")
-          : cookie.get("MADid"),
-        msd_user_id: getItem("customerID", "local")
-          ? getItem("customerID", "local")
-          : "",
-        page_path: window.location.href,
-        page_type: "SSO",
-        loyalty_level: getItem("loyalitylevel", "local")
-          ? getItem("loyalitylevel", "local")
-          : "na",
-        user_mail_id: "na",
-        user_phone_number: username,
-        page_slug: getItem("currentPageSlug", "local"),
-      };
-      const param = { params: SignInProceed, action: "signin_proceed" };
-
-      event(param);
-      setIsLoading(true);
-
-      // call api
-      const loginWithOtpApiResponse = await loginWithOtpAPI(username);
-
-      const { status, response }: any = loginWithOtpApiResponse;
-
-      if (status === "success") {
-        const { otpSent, errorCode, errorMessage } =
-          response?.data?.loginWithOtp;
-
-        if (otpSent === true) {
-          // setIsOtpChecking(true);
-          setCurrScreen("verify_otp");
-          // getIsMobile(true);
-          // setNetworkError(false);
-        }
-
-        if (
-          errorCode.toLowerCase() === "maxresendattemptsreachedotperror" ||
-          errorCode.toLowerCase() === "maxverificationattemptsreachedotperror"
-        ) {
-          // setOtpErrorSnackBarOpen(true);
-          // setSnackBarMessage(errorMessage);
-        }
-        setIsLoading(false);
-      }
-      if (status === "fail") {
-        // setNetworkError(true);
-        // setNetworkError("Network Error");
-        setIsLoading(false);
-      }
     } else {
-      setError(true);
-      let Error = ErrorEvent();
-      Error.page_title = "signindetailpage";
-      (Error.page_type = "SSO"), (Error.page_path = window.location.href);
-      Error.platform = window?.innerWidth > 768 ? "PWA" : "MobilePWA";
-      Error.status = "invalid";
-      let ErrorDetails = {
-        ...Error,
-        page_referrer_title: getItem("previousPageTitle", "local"),
-        page_referrer: getItem("previousPagePath", "local"),
-      };
-
-      const param = { params: ErrorDetails, action: "error" };
-      event(param);
-      setHelperText("Please enter a valid phone number");
+      setIsDisabled(true);
     }
-    // getUserInfo(username);
   };
+  const handleProceed = async () => {
+    setCurrScreen("verify_otp");
+  };
+
+  // const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+  //   const { value } = event.target;
+
+  //   // if (isMobileNumber(value)) {
+  //   //   setUserName(value);
+  //   // }
+  //   value?.length <= 10 && Number(value[0]) > 5
+  //     ? setUserName(Math.max(0, parseInt(value)).toString().slice(0, 10))
+  //     : value?.length == 0 && setUserName("");
+
+  //   if (value?.length == 0) {
+  //     setError(false);
+  //   } else if (value?.length < 10) {
+  //     setError(true);
+  //     setHelperText("Phone number should be a valid number of 10 digits");
+  //     setIsDisabled(true);
+  //   } else {
+  //     setError(false);
+  //     setIsDisabled(false);
+  //   }
+  // };
+
+  // const handleProceed = async () => {
+  //   // router.push(processScreenRoutes.);
+
+  //   if (isEmailID(username)) {
+  //     let SignInProcced = SignInProccess();
+  //     setError(false);
+  //     // getIsEmail(true);
+  //     localStorage.setItem("Email", username);
+  //     (SignInProcced.page_title = "signindetailpage"),
+  //       (SignInProcced.page_type = "SSO"),
+  //       (SignInProcced.page_path = window?.location?.pathname),
+  //       (SignInProcced.platform =
+  //         window?.innerWidth > 768 ? "PWA" : "MobilePWA"),
+  //       (SignInProcced.method = "email");
+  //     (SignInProcced.link_url = "na"), (SignInProcced.link_text = "email");
+  //     SignInProcced.outbound = false;
+  //     SignInProcced.jounry_type = "signIn";
+  //     SignInProcced.status = "valid";
+  //     let SignInProceed = {
+  //       ...SignInProcced,
+  //       user_info_hash: CryptoJS.MD5(username),
+  //       page_referrer: getItem("previousPagePath", "local"),
+  //       page_referrer_title: getItem("previousPageTitle", "local"),
+  //       platform: window?.innerWidth > 768 ? "PWA" : "MobilePWA",
+  //       customer_id: getItem("customerID", "local")
+  //         ? getItem("customerID", "local")
+  //         : cookie.get("MADid"),
+  //       msd_user_id: getItem("customerID", "local")
+  //         ? getItem("customerID", "local")
+  //         : "",
+  //       page_path: window?.location?.href,
+  //       page_type: "SSO",
+  //       loyalty_level: getItem("loyalitylevel", "local")
+  //         ? getItem("loyalitylevel", "local")
+  //         : "",
+  //       user_mail_id: CryptoJS.MD5(username),
+  //       user_phone_number: username,
+  //     };
+  //     const param = { params: SignInProceed, action: "signin_proceed" };
+  //     event(param);
+  //   } else if (isMobileNumber(username)) {
+  //     setError(false);
+  //     let SignInProcced = SignInProccess();
+  //     (SignInProcced.page_title = "signindetailpage"),
+  //       localStorage.setItem("mobileNumber", username);
+  //     SignInProcced.method = "mobile";
+  //     (SignInProcced.link_url = "na"), (SignInProcced.link_text = "PROCEED");
+  //     SignInProcced.outbound = false;
+  //     SignInProcced.jounry_type = "signin";
+  //     SignInProcced.status = "valid";
+  //     let SignInProceed = {
+  //       ...SignInProcced,
+  //       user_info_hash: CryptoJS.MD5(username),
+  //       page_referrer:
+  //         JSON?.parse(localStorage?.getItem("pageReferrer") as string)?.[
+  //           JSON?.parse(localStorage?.getItem("pageReferrer") as string)
+  //             ?.length - 2
+  //         ]?.previousPagePath || "na",
+  //       page_referrer_title:
+  //         JSON.parse(localStorage?.getItem("pageReferrer") as string)?.[
+  //           JSON?.parse(localStorage?.getItem("pageReferrer") as string)
+  //             ?.length - 2
+  //         ]?.previousPageTitle || "na",
+  //       platform: window?.innerWidth > 768 ? "PWA" : "MobilePWA",
+  //       customer_id: getItem("customerID", "local")
+  //         ? getItem("customerID", "local")
+  //         : cookie.get("MADid"),
+  //       msd_user_id: getItem("customerID", "local")
+  //         ? getItem("customerID", "local")
+  //         : "",
+  //       page_path: window.location.href,
+  //       page_type: "SSO",
+  //       loyalty_level: getItem("loyalitylevel", "local")
+  //         ? getItem("loyalitylevel", "local")
+  //         : "na",
+  //       user_mail_id: "na",
+  //       user_phone_number: username,
+  //       page_slug: getItem("currentPageSlug", "local"),
+  //     };
+  //     const param = { params: SignInProceed, action: "signin_proceed" };
+
+  //     event(param);
+  //     setIsLoading(true);
+
+  //     // call api
+  //     const loginWithOtpApiResponse = await loginWithOtpAPI(username);
+
+  //     const { status, response }: any = loginWithOtpApiResponse;
+
+  //     if (status === "success") {
+  //       const { otpSent, errorCode, errorMessage } =
+  //         response?.data?.loginWithOtp;
+
+  //       if (otpSent === true) {
+  //         // setIsOtpChecking(true);
+  //         setCurrScreen("verify_otp");
+  //         // getIsMobile(true);
+  //         // setNetworkError(false);
+  //       }
+
+  //       if (
+  //         errorCode.toLowerCase() === "maxresendattemptsreachedotperror" ||
+  //         errorCode.toLowerCase() === "maxverificationattemptsreachedotperror"
+  //       ) {
+  //         // setOtpErrorSnackBarOpen(true);
+  //         // setSnackBarMessage(errorMessage);
+  //       }
+  //       setIsLoading(false);
+  //     }
+  //     if (status === "fail") {
+  //       // setNetworkError(true);
+  //       // setNetworkError("Network Error");
+  //       setIsLoading(false);
+  //     }
+  //   } else {
+  //     setError(true);
+  //     let Error = ErrorEvent();
+  //     Error.page_title = "signindetailpage";
+  //     (Error.page_type = "SSO"), (Error.page_path = window.location.href);
+  //     Error.platform = window?.innerWidth > 768 ? "PWA" : "MobilePWA";
+  //     Error.status = "invalid";
+  //     let ErrorDetails = {
+  //       ...Error,
+  //       page_referrer_title: getItem("previousPageTitle", "local"),
+  //       page_referrer: getItem("previousPagePath", "local"),
+  //     };
+
+  //     const param = { params: ErrorDetails, action: "error" };
+  //     event(param);
+  //     setHelperText("Please enter a valid phone number");
+  //   }
+  //   // getUserInfo(username);
+  // };
 
   const RenderScreen = () => {
     const ScreenRender = allScreens[currScreen];
@@ -264,7 +279,9 @@ const LoginUsingMobile = () => {
           />
         );
       case "verify_otp":
-        return <ScreenRender {...{ ResendOtp, counter, setCounter }} />;
+        return (
+          <ScreenRender {...{ ResendOtp: () => {}, counter, setCounter }} />
+        );
       case "signup_details":
         return <ScreenRender />;
     }
