@@ -10,9 +10,11 @@ import { addProduct } from "@/store/slices/processSlice";
 import { processScreenRoutes } from "@/constants/allRoutes";
 import { Button } from "@mui/material";
 
+const drawerBleeding = 0;
+
 const ScannerScreen = () => {
   const [currentText, setCurrentText] = useState<string>("");
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
   const [disabled, setDisabled] = useState(true);
   const ref = useRef<Html5QrcodeScanner | null>(null);
   const dispatch = useAppDispatch();
@@ -42,9 +44,14 @@ const ScannerScreen = () => {
   };
 
   const resetAndScanAgain = () => {
-    setCurrentText("");
-    ref.current?.resume();
-    setOpen(false);
+    try {
+      setCurrentText("");
+      if (ref && ref.current) ref.current?.resume();
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setOpen(false);
+    }
   };
 
   const onClose = () => () => {
@@ -74,6 +81,9 @@ const ScannerScreen = () => {
           data: currentText,
           setCurrentText,
           camRef: ref,
+          drawerStyles: {
+            height: `calc(90% - ${drawerBleeding}px)`,
+          },
           handleAddProduct,
         }}
       >

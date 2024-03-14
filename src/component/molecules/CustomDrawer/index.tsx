@@ -5,14 +5,14 @@ import CssBaseline from "@mui/material/CssBaseline";
 import { grey } from "@mui/material/colors";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
 
-const drawerBleeding = 0;
-
 interface Props {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   window?: () => Window;
   children: JSX.Element;
   onClose: () => void;
+  drawerStyles?: any;
+  drawerBleeding?: number;
 }
 
 const Root = styled("div")(({ theme }) => ({
@@ -38,7 +38,15 @@ const Puller = styled("div")(({ theme }) => ({
 }));
 
 const CustomDrawer = (props: Props) => {
-  const { window, open, setOpen, children, onClose } = props;
+  const {
+    window,
+    open,
+    setOpen,
+    children,
+    onClose,
+    drawerStyles = {},
+    drawerBleeding = 0,
+  } = props;
 
   const onOpen = () => () => {
     setOpen(true);
@@ -53,10 +61,10 @@ const CustomDrawer = (props: Props) => {
       <Global
         styles={{
           ".MuiDrawer-root > .MuiPaper-root": {
-            height: `calc(90% - ${drawerBleeding}px)`,
             overflow: "visible",
             borderTopLeftRadius: 12,
             borderTopRightRadius: 12,
+            ...drawerStyles,
           },
         }}
       />
