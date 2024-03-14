@@ -78,13 +78,9 @@ const ScannerScreen = () => {
           open,
           setOpen,
           onClose,
-          data: currentText,
-          setCurrentText,
-          camRef: ref,
           drawerStyles: {
             height: `calc(90% - ${drawerBleeding}px)`,
           },
-          handleAddProduct,
         }}
       >
         <div className={styles.customDrawerContainer}>

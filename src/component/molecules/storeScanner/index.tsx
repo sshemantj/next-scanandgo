@@ -4,9 +4,10 @@ import { ToastContainer, toast } from "react-toastify";
 import { Html5QrcodeScanner } from "html5-qrcode";
 import { processScreenRoutes } from "@/constants/allRoutes";
 import { useRouter } from "next/router";
-import { Grid } from "@mui/material";
+import { Button, Grid } from "@mui/material";
 import useWithinRadius from "@/hooks/useWithinRadius";
 import styles from "./storeScanner.module.scss";
+import CustomDrawer from "../CustomDrawer";
 
 interface IStoreLocation {
   latitude: number | null;
@@ -26,6 +27,7 @@ const StoreScanner = () => {
   const ref = useRef<Html5QrcodeScanner | null>(null);
   const router = useRouter();
   const [distance, setDistance] = useState<number>(200);
+  const [open, setOpen] = useState(true);
   const [storeLocation, setStoreLocation] =
     useState<IStoreLocation>(initialLocationValue);
   const { isWithinRadius, setIsWithinRadius, setStoreDetailsSetup } =
@@ -73,6 +75,10 @@ const StoreScanner = () => {
     handleStartCamera();
   }, []);
 
+  const onClose = () => () => {
+    setOpen(false);
+  };
+
   return (
     <div className={styles.storeScannerContainer}>
       <div className={styles.qrCodeScanWrapper}>
@@ -87,6 +93,18 @@ const StoreScanner = () => {
           showZoomSliderIfSupported={true}
         />
       </div>
+      <CustomDrawer
+        {...{
+          open,
+          setOpen,
+          onClose,
+          drawerStyles: {
+            height: "30vh",
+          },
+        }}
+      >
+        <div className={styles.customDrawerContainer}></div>
+      </CustomDrawer>
       <ToastContainer autoClose={3000} />
     </div>
   );
