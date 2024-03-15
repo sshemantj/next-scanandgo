@@ -10,6 +10,7 @@ const countryCodes = [{ code: "+1" }, { code: "+91" }];
 const LoginModule = () => {
   const [phoneNumber, setPhoneNumber] = useState<string>("");
   const [email, setEmail] = useState<string>("");
+  const [showOtp, setShowOtp] = useState<boolean>(false);
 
   const handlePhoneNumberChange = (value: string) => {
     setPhoneNumber(value);
@@ -22,7 +23,11 @@ const LoginModule = () => {
     setEmail(e.target.value);
   };
 
-  return (
+  const handleSubmit = () => {
+    setShowOtp(true);
+  };
+
+  return !showOtp ? (
     <div className={styles.loginModuleWrapper}>
       <div className={styles.inputWrapper}>
         <div className={styles.alreadyLoginContainer}>
@@ -76,10 +81,16 @@ const LoginModule = () => {
           onChange={handleEmail}
         />
       </div>
-      <CustomButton style={{ width: "100%" }} variant="dark">
+      <CustomButton
+        onClick={() => handleSubmit()}
+        style={{ width: "100%" }}
+        variant="dark"
+      >
         Submit
       </CustomButton>
     </div>
+  ) : (
+    <h1>Show otp screen</h1>
   );
 };
 
