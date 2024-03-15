@@ -77,7 +77,14 @@ const CustomQrcodeScanner = React.forwardRef<
       if (html5QrcodeScanner && container?.innerHTML == "") {
         html5QrcodeScanner.start(
           { facingMode: "user" },
-          undefined,
+          {
+            fps: 30,
+            videoConstraints: {
+              facingMode: {
+                exact: window.innerWidth > 768 ? "user" : "environment",
+              },
+            },
+          },
           props.qrCodeSuccessCallback,
           props.qrCodeErrorCallback
         );
