@@ -4,6 +4,7 @@ import CustomButton from "@/component/atoms/customButton";
 import styles from "./loginModule.module.scss";
 import MobileNumberInput from "@/component/atoms/mobileInput";
 import { TextField } from "@mui/material";
+import OtpScreen from "./otpScreen";
 
 const countryCodes = [{ code: "+1" }, { code: "+91" }];
 
@@ -11,6 +12,7 @@ const LoginModule = () => {
   const [phoneNumber, setPhoneNumber] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [showOtp, setShowOtp] = useState<boolean>(false);
+  const [otpinput, setOtpInput] = useState<string>("");
 
   const handlePhoneNumberChange = (value: string) => {
     setPhoneNumber(value);
@@ -90,7 +92,7 @@ const LoginModule = () => {
       </CustomButton>
     </div>
   ) : (
-    <h1>Show otp screen</h1>
+    <OtpScreen {...{ otpinput, setOtpInput }} />
   );
 };
 
