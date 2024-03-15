@@ -77,7 +77,7 @@ const CustomQrcodeScanner = React.forwardRef<
       if (html5QrcodeScanner && container?.innerHTML == "") {
         html5QrcodeScanner.start(
           { facingMode: "user" },
-          config,
+          undefined,
           props.qrCodeSuccessCallback,
           props.qrCodeErrorCallback
         );
