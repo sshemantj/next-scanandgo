@@ -8,6 +8,7 @@ import useWithinRadius from "@/hooks/useWithinRadius";
 // import CustomDrawer from "../CustomDrawer";
 import styles from "./storeScanner.module.scss";
 import CustomButton from "@/component/atoms/customButton";
+import CustomHtml5Qrcode from "../customHtml5Qrcode";
 
 interface IStoreLocation {
   latitude: number | null;
@@ -76,10 +77,21 @@ const StoreScanner = () => {
     router.push(processScreenRoutes.PROCESS_SCANNER_SCREEN);
   };
 
+  const qrCodeSuccessCallback = (decodedText: string) => {
+    alert(decodedText);
+    onNewScanResult(decodedText);
+  };
+  const qrCodeErrorCallback = (error: string) => {
+    console.log(error);
+  };
+
   return (
     <div className={styles.storeScannerContainer}>
       <div className={styles.qrCodeScanWrapper}>
-        <CustomQrcodeScanner
+        <CustomHtml5Qrcode
+          {...{ qrCodeSuccessCallback, qrCodeErrorCallback }}
+        />
+        {/* <CustomQrcodeScanner
           ref={ref as Ref<ForwardedRef<Html5QrcodeScanner | null>>}
           fps={10}
           qrbox={250}
@@ -88,7 +100,7 @@ const StoreScanner = () => {
           qrCodeSuccessCallback={onNewScanResult}
           qrCodeErrorCallback={(error) => console.log(error)}
           showZoomSliderIfSupported={true}
-        />
+        /> */}
       </div>
       <div className={styles.scanNowWrapper}>
         <p>
