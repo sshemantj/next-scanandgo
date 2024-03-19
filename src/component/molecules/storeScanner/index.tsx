@@ -102,7 +102,7 @@ const StoreScanner = () => {
   return (
     <div className={styles.storeScannerContainer}>
       <div className={styles.qrCodeScanWrapper}>
-        <h1>current device:= {currentDevice}</h1>
+        <h1 style={{ color: "#fff" }}>current device:= {currentDevice}</h1>
         {currentDevice === "iphone" && (
           <CustomHtml5Qrcode
             {...{ qrCodeSuccessCallback, qrCodeErrorCallback }}
