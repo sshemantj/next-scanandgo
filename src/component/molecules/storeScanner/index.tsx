@@ -1,14 +1,14 @@
-import React, { ForwardedRef, Ref, useEffect, useRef, useState } from "react";
-import CustomQrcodeScanner from "@/component/molecules/customQrcodeScanner";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import { Html5QrcodeScanner } from "html5-qrcode";
 import { processScreenRoutes } from "@/constants/allRoutes";
 import { useRouter } from "next/router";
 import useWithinRadius from "@/hooks/useWithinRadius";
-// import CustomDrawer from "../CustomDrawer";
 import styles from "./storeScanner.module.scss";
 import CustomButton from "@/component/atoms/customButton";
 import CustomHtml5Qrcode from "../customHtml5Qrcode";
+import CustomQrScanner from "../customQrScanner";
+import { isAndroid, isIphone } from "@/utils/checkDevice";
 
 interface IStoreLocation {
   latitude: number | null;
@@ -25,14 +25,24 @@ const initialLocationValue = {
 let TIMEOUT: NodeJS.Timeout;
 
 const StoreScanner = () => {
-  const ref = useRef<Html5QrcodeScanner | null>(null);
   const router = useRouter();
   const [distance, setDistance] = useState<number>(200);
   const [disabled, setDisabled] = useState(true);
+  const [currentDevice, setCurrentDevice] = useState<
+    "iphone" | "android" | "other"
+  >("other");
   const [storeLocation, setStoreLocation] =
     useState<IStoreLocation>(initialLocationValue);
   const { isWithinRadius, setIsWithinRadius, setStoreDetailsSetup } =
     useWithinRadius();
+
+  useLayoutEffect(() => {
+    if (isIphone()) {
+      setCurrentDevice("iphone");
+    } else if (isAndroid()) {
+      setCurrentDevice("android");
+    }
+  }, []);
 
   useEffect(() => {
     setStoreDetailsSetup({
@@ -65,7 +75,11 @@ const StoreScanner = () => {
   useEffect(() => {
     const handleStartCamera = async () => {
       try {
-        await navigator.mediaDevices.getUserMedia({ video: true });
+        await navigator.mediaDevices.getUserMedia({
+          video: {
+            facingMode: "environment",
+          },
+        });
       } catch (err: any) {
         console.log(err.message || "Failed to access camera.");
       }
@@ -88,9 +102,17 @@ const StoreScanner = () => {
   return (
     <div className={styles.storeScannerContainer}>
       <div className={styles.qrCodeScanWrapper}>
-        <CustomHtml5Qrcode
-          {...{ qrCodeSuccessCallback, qrCodeErrorCallback }}
-        />
+        <h1>current device:= {currentDevice}</h1>
+        {currentDevice === "iphone" && (
+          <CustomHtml5Qrcode
+            {...{ qrCodeSuccessCallback, qrCodeErrorCallback }}
+          />
+        )}
+        {currentDevice === "android" && (
+          <CustomQrScanner
+            {...{ qrCodeSuccessCallback, qrCodeErrorCallback }}
+          />
+        )}
         {/* <CustomQrcodeScanner
           ref={ref as Ref<ForwardedRef<Html5QrcodeScanner | null>>}
           fps={10}
