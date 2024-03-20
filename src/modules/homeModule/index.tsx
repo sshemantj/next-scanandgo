@@ -17,7 +17,13 @@ const HomeModule = () => {
           WELCOME TO <br /> SHOPPERS STOP - MALAD
         </p>
         <div>
-          <Image width={200} height={200} src={scanImg} alt="scan imgage" />
+          <Image
+            loading="eager"
+            width={200}
+            height={200}
+            src={scanImg}
+            alt="scan imgage"
+          />
         </div>
         <p className={styles.scanAndGoPara}>SCAN & GO</p>
         <p className={styles.description}>
