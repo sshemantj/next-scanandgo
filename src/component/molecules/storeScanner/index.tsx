@@ -92,7 +92,7 @@ const StoreScanner = () => {
   };
 
   const qrCodeSuccessCallback = (decodedText: string) => {
-    alert(decodedText);
+    // alert(decodedText);
     onNewScanResult(decodedText);
   };
   const qrCodeErrorCallback = (error: string) => {
