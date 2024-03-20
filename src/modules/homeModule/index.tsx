@@ -1,9 +1,9 @@
 import Image from "next/image";
 import scanImg from "@/images/scan-img.png";
-import styles from "./homemodule.module.scss";
 import CustomButton from "@/component/atoms/customButton";
 import { useRouter } from "next/router";
 import { allRoutes } from "@/constants/allRoutes";
+import styles from "./homemodule.module.scss";
 
 const HomeModule = () => {
   const router = useRouter();
