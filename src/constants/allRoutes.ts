@@ -1,6 +1,7 @@
 export enum allRoutes {
   HOME = "/",
   LOGIN = "/login",
+  STORE_SCANNER = "/storescan",
   PROCESS = "/process",
 }
 
