@@ -20,16 +20,23 @@ const startScan = (
     formatsToSupport,
     verbose: true,
   });
-  const config = { fps: 10, qrbox: { width: 250, height: 250 } };
-  html5QrCode.start(
-    {
-      facingMode:
-        process.env.NODE_ENV === "development" ? "user" : "environment",
-    },
-    config,
-    successCb,
-    errorCb
-  );
+  try {
+    const config = {
+      fps: 10,
+      // qrbox: { width: 250, height: 250 },
+    };
+    html5QrCode.start(
+      {
+        facingMode:
+          process.env.NODE_ENV === "development" ? "user" : "environment",
+      },
+      config,
+      successCb,
+      errorCb
+    );
+  } catch (error: any) {
+    errorCb(error.message);
+  }
 };
 
 const CustomHtml5Qrcode = (props: IProps) => {

@@ -19,7 +19,11 @@ const CustomQrScanner = (props: IProps) => {
           preferredCamera: "environment",
         }
       );
-      qrScanner.start();
+      try {
+        qrScanner.start();
+      } catch (error: any) {
+        qrCodeErrorCallback(error.message);
+      }
     }
   };
   useEffect(() => {
