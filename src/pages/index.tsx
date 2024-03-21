@@ -2,20 +2,25 @@ import HomeModule from "@/modules/homeModule";
 import { NextPage } from "next";
 import Navbar from "@/component/molecules/Navbar";
 import Head from "next/head";
-import { useRef } from "react";
-import styles from "@/styles/Home.module.css";
+import CustomBottomNavigation from "@/component/molecules/CustomBottomNavigation";
 
 const Home: NextPage = () => {
-  const ref = useRef<HTMLElement | null>(null);
-
   return (
     <>
       <Head>
         <title>Scan-&-go!</title>
       </Head>
       <Navbar />
-      <main>
+      <main
+        style={{
+          height: "calc(100vh - 60px)",
+          display: "flex",
+          justifyContent: "space-between",
+          flexDirection: "column",
+        }}
+      >
         <HomeModule />
+        <CustomBottomNavigation />
       </main>
     </>
   );
