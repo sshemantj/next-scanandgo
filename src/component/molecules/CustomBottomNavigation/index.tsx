@@ -8,6 +8,7 @@ import categoriesicon from "@/images/categories.png";
 import diamondicon from "@/images/diamond.png";
 import tagicon from "@/images/tagicon.png";
 import profile from "@/images/profile.png";
+import styles from "./bottomNavigation.module.scss";
 
 const CustomBottomNavigation = () => {
   const [value, setValue] = React.useState(0);
@@ -36,7 +37,7 @@ const CustomBottomNavigation = () => {
   ];
 
   return (
-    <Box>
+    <Box className={styles.bottomNavigationWrapper}>
       <BottomNavigation
         showLabels
         value={value}

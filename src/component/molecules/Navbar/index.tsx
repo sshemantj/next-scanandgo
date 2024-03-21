@@ -8,6 +8,7 @@ import { Button } from "@mui/material";
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import { allRoutes } from "@/constants/allRoutes";
 import { useAppSelector } from "@/store/hooks";
+import CustomBottomNavigation from "@/component/molecules/CustomBottomNavigation";
 import hamsvg from "@/images/ham.svg";
 import logosvg from "@/images/logo.svg";
 import {
@@ -19,9 +20,15 @@ import {
 
 interface INavbar {
   showBackBtn?: boolean;
+  children?: JSX.Element;
+  showBottomNavigation?: boolean;
 }
 
-const Navbar = ({ showBackBtn = false }: INavbar) => {
+const Navbar = ({
+  showBackBtn = false,
+  children = <></>,
+  showBottomNavigation = false,
+}: INavbar) => {
   const [showNavbar, setShowNavbar] = useState(false);
   const [isShowNav, setIsShowNav] = useState(false);
   const router = useRouter();
@@ -46,79 +53,88 @@ const Navbar = ({ showBackBtn = false }: INavbar) => {
   }, [showBackBtn, showBack, showBackInNavbar]);
 
   return (
-    <nav className={styles.navWrapper}>
-      <div className={styles.container}>
-        <div className={styles.lhsWrapper}>
-          {!isShowNav ? (
-            <div
-              className={styles["menu-icon"]}
-              onClick={() => handleShowNavbar()}
-            >
-              <Image src={hamsvg} alt="hamberger" width={20} height={20} />
+    <div>
+      <nav className={styles.navWrapper}>
+        <div className={styles.container}>
+          <div className={styles.lhsWrapper}>
+            {!isShowNav ? (
+              <div
+                className={styles["menu-icon"]}
+                onClick={() => handleShowNavbar()}
+              >
+                <Image src={hamsvg} alt="hamberger" width={20} height={20} />
+              </div>
+            ) : null}
+            <div className={styles.logo}>
+              {isShowNav ? (
+                <Button
+                  variant="text"
+                  color="inherit"
+                  onClick={() => router.back()}
+                >
+                  <KeyboardBackspaceIcon /> <span>back</span>
+                </Button>
+              ) : (
+                <Link href={allRoutes.HOME}>
+                  <Image width={150} height={100} src={logosvg} alt="logo" />
+                </Link>
+              )}
             </div>
-          ) : null}
-          <div className={styles.logo}>
-            {isShowNav ? (
-              <Button
-                variant="text"
-                color="inherit"
-                onClick={() => router.back()}
-              >
-                <KeyboardBackspaceIcon /> <span>back</span>
-              </Button>
-            ) : (
-              <Link href={allRoutes.HOME}>
-                <Image width={150} height={100} src={logosvg} alt="logo" />
-              </Link>
-            )}
+          </div>
+          <div className={styles.rhsWrapper}>
+            <div className={styles.barcodeIcon}>
+              <Image
+                src={barCodeScanIcon}
+                alt="barcode"
+                width={25}
+                height={25}
+              />
+            </div>
+            <div className={styles.searchIcon}>
+              <Image src={searchIcon} alt="search" width={25} height={25} />
+            </div>
+            <div className={styles.heartIcon}>
+              <Image src={heartIcon} alt="liked" width={25} height={25} />
+            </div>
+            <div className={styles.searchIcon}>
+              <Image src={bagIcon} alt="bag" width={25} height={25} />
+            </div>
+          </div>
+          <div
+            className={`${styles["nav-elements"]}  ${
+              showNavbar && styles.active
+            }`}
+          >
+            <ul>
+              <li>
+                <Link
+                  className={
+                    router.pathname === allRoutes.HOME ? styles.active : ""
+                  }
+                  href={allRoutes.HOME}
+                  passHref
+                >
+                  Home
+                </Link>
+              </li>
+              <li>
+                <Link
+                  className={
+                    router.pathname === allRoutes.LOGIN ? styles.active : ""
+                  }
+                  href={allRoutes.LOGIN}
+                  passHref
+                >
+                  Login
+                </Link>
+              </li>
+            </ul>
           </div>
         </div>
-        <div className={styles.rhsWrapper}>
-          <div className={styles.barcodeIcon}>
-            <Image src={barCodeScanIcon} alt="barcode" width={25} height={25} />
-          </div>
-          <div className={styles.searchIcon}>
-            <Image src={searchIcon} alt="search" width={25} height={25} />
-          </div>
-          <div className={styles.heartIcon}>
-            <Image src={heartIcon} alt="liked" width={25} height={25} />
-          </div>
-          <div className={styles.searchIcon}>
-            <Image src={bagIcon} alt="bag" width={25} height={25} />
-          </div>
-        </div>
-        <div
-          className={`${styles["nav-elements"]}  ${
-            showNavbar && styles.active
-          }`}
-        >
-          <ul>
-            <li>
-              <Link
-                className={
-                  router.pathname === allRoutes.HOME ? styles.active : ""
-                }
-                href={allRoutes.HOME}
-                passHref
-              >
-                Home
-              </Link>
-            </li>
-            <li>
-              <Link
-                className={
-                  router.pathname === allRoutes.LOGIN ? styles.active : ""
-                }
-                href={allRoutes.LOGIN}
-                passHref
-              >
-                Login
-              </Link>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
+      </nav>
+      {children}
+      {showBottomNavigation ? <CustomBottomNavigation /> : null}
+    </div>
   );
 };
 
