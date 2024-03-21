@@ -32,7 +32,7 @@ const HomeModule = () => {
         <CustomButton
           onClick={() => handleScanNow()}
           style={{
-            margin: "1.5rem 0 0 0",
+            margin: "2rem 0 0 0",
             padding: "0.2rem 2rem",
             width: "100%",
           }}
