@@ -31,7 +31,11 @@ const HomeModule = () => {
         </p>
         <CustomButton
           onClick={() => handleScanNow()}
-          style={{ padding: "0.2rem 2rem", width: "100%" }}
+          style={{
+            margin: "1.5rem 0 0 0",
+            padding: "0.2rem 2rem",
+            width: "100%",
+          }}
           variant="dark"
         >
           SCAN NOW
