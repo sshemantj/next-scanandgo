@@ -8,6 +8,7 @@ import OfferBox from "@/component/atoms/offerBox";
 import SavedPayment from "@/component/atoms/savedPayment";
 import upiIcon from "@/images/upiIcon.svg";
 import creditCardIcon from "@/images/creditCardIcon.svg";
+import CustomButton from "@/component/atoms/customButton";
 
 const paymentListStatic = [
   {
@@ -48,6 +49,10 @@ const PaymentScreen = () => {
     );
   };
 
+  const handlePayClick = () => {
+    router.push(processScreenRoutes.PROCESS_SHOW_QR_SCREEN);
+  };
+
   return (
     <div className={styles.selectPaymentWrapper}>
       {paymentSuccess ? (
@@ -61,6 +66,13 @@ const PaymentScreen = () => {
             }
           />
           <SavedPayment paymentList={paymentListStatic} />
+          <CustomButton
+            onClick={() => handlePayClick()}
+            style={{ marginTop: "1rem", width: "100%" }}
+            variant="dark"
+          >
+            PAY
+          </CustomButton>
         </div>
       )}
     </div>

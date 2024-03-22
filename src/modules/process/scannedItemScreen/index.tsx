@@ -21,7 +21,7 @@ const ScannedItemScreen = () => {
   const handleCheckout = () => {
     const isLogin = true;
     if (isLogin) {
-      router.push(processScreenRoutes.PROCESS_SUMMARY_SCREEN);
+      router.push(processScreenRoutes.PROCESS_PAYMENT_SCREEN);
     } else {
       router.push({
         pathname: allRoutes.LOGIN,
