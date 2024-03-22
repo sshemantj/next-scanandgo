@@ -60,6 +60,7 @@ const StoreScanner = () => {
     if (isWithinRadius) {
       toast.success(`Store qr-code scan successfull!`);
       setDisabled(false);
+      router.push(processScreenRoutes.PROCESS_SCANNER_SCREEN);
     }
     if (isWithinRadius === false) {
       toast.error(`Store is not within ${distance}m range!`);
