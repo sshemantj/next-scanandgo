@@ -19,21 +19,33 @@ const paymentListStatic = [
   },
   {
     label: "HDFC Credit Card",
-    value: "HDFC Credit Card",
+    value: "HDFC Credit Card1",
     supportText: "**** 7269",
     icon: creditCardIcon,
   },
   {
-    label: "qw79012@oksbi1",
+    label: "qw79012@oksbi",
     value: "qw79012@oksbi2",
     supportText: "",
     icon: upiIcon,
   },
   {
-    label: "qw79012@oksbi1",
+    label: "qw79012@oksbi",
     value: "qw79012@oksbi3",
     supportText: "",
     icon: upiIcon,
+  },
+  {
+    label: "HDFC Credit Card",
+    value: "HDFC Credit Card2",
+    supportText: "**** 7269",
+    icon: creditCardIcon,
+  },
+  {
+    label: "HDFC Credit Card",
+    value: "HDFC Credit Card3",
+    supportText: "**** 7269",
+    icon: creditCardIcon,
   },
 ];
 

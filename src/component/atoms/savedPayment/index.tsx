@@ -18,9 +18,12 @@ interface IProps {
 const SavedPayment = (props: IProps) => {
   const { paymentList } = props;
   const [value, setValue] = useState("female");
+  const [view, setView] = useState<"All" | "Less">("All");
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue((event.target as HTMLInputElement).value);
   };
+
+  const paymentListArr = view === "All" ? paymentList : paymentList.slice(0, 2);
 
   return (
     <div className={styles.savedPaymentWrapper}>
@@ -36,7 +39,7 @@ const SavedPayment = (props: IProps) => {
               value={value}
               onChange={handleChange}
             >
-              {paymentList.map((item, index) => {
+              {paymentListArr.map((item, index) => {
                 const { label, value, supportText, icon } = item;
                 return (
                   <div key={index} className={styles.formLabel}>
@@ -56,6 +59,12 @@ const SavedPayment = (props: IProps) => {
                   </div>
                 );
               })}
+              <div
+                onClick={() => setView((v) => (v === "All" ? "Less" : "All"))}
+                className={styles.seeAllPayment}
+              >
+                <p>See {view} saved payments</p>
+              </div>
             </RadioGroup>
           </FormControl>
         </div>
