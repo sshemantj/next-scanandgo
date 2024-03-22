@@ -1,0 +1,36 @@
+.savedPaymentWrapper {
+  margin-top: 1rem;
+  border: 1px solid rgba($color: #000000, $alpha: 0.2);
+  border-radius: 4px;
+  .titleWrapper {
+    padding: 1rem;
+    p {
+      font-size: 14px;
+    }
+  }
+  .paymentList {
+    padding: 0 1rem;
+    .singlePayment {
+      width: 100%;
+      .formLabel {
+        padding: 2px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border: 1px solid rgba(0, 0, 0, 0.2);
+        .lhs {
+          .supportText {
+            padding: 0 0 0 30px;
+            transform: translateY(-8px);
+            color: rgba(0, 0, 0, 0.6);
+            font-size: 14px;
+          }
+        }
+        .rhs {
+          display: flex;
+          align-items: center;
+        }
+      }
+    }
+  }
+}
