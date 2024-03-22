@@ -6,6 +6,7 @@ import {
   QrcodeErrorCallback,
   QrcodeSuccessCallback,
   Html5Qrcode,
+  Html5QrcodeSupportedFormats,
 } from "html5-qrcode";
 
 interface ICustomBarCodeScanner {
@@ -61,6 +62,17 @@ const CustomBarCodeScanner = React.forwardRef<
     if (newRef && newRef.current === null) {
       newRef.current = new Html5Qrcode(qrcodeRegionId, {
         useBarCodeDetectorIfSupported: true,
+        formatsToSupport: [
+          Html5QrcodeSupportedFormats.AZTEC,
+          Html5QrcodeSupportedFormats.CODABAR,
+          Html5QrcodeSupportedFormats.CODE_128,
+          Html5QrcodeSupportedFormats.CODE_39,
+          Html5QrcodeSupportedFormats.CODE_93,
+          Html5QrcodeSupportedFormats.DATA_MATRIX,
+          Html5QrcodeSupportedFormats.EAN_13,
+          Html5QrcodeSupportedFormats.EAN_8,
+          Html5QrcodeSupportedFormats.ITF,
+        ],
         verbose: true,
         experimentalFeatures: {
           useBarCodeDetectorIfSupported: true,
@@ -80,7 +92,6 @@ const CustomBarCodeScanner = React.forwardRef<
         );
       }
     }, 0);
-
   }, []);
 
   return <div id={qrcodeRegionId} />;
