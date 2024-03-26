@@ -5,10 +5,11 @@ import { processScreenRoutes } from "@/constants/allRoutes";
 import PaymentSuccess from "@/component/atoms/paymentSuccess";
 import styles from "./paymentScreen.module.scss";
 import OfferBox from "@/component/atoms/offerBox";
-import SavedPayment from "@/component/atoms/savedPayment";
 import upiIcon from "@/images/upiIcon.svg";
 import creditCardIcon from "@/images/creditCardIcon.svg";
 import CustomButton from "@/component/atoms/customButton";
+import SavedPayment from "@/component/atoms/savedPayment";
+import OtherPayment from "@/component/atoms/otherPayment";
 
 const paymentListStatic = [
   {
@@ -78,6 +79,7 @@ const PaymentScreen = () => {
             }
           />
           <SavedPayment paymentList={paymentListStatic} />
+          <OtherPayment otherPaymentList={paymentListStatic} />
           <CustomButton
             onClick={() => handlePayClick()}
             style={{ marginTop: "1rem", width: "100%" }}
