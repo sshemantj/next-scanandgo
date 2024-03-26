@@ -10,6 +10,7 @@ import creditCardIcon from "@/images/creditCardIcon.svg";
 import CustomButton from "@/component/atoms/customButton";
 import SavedPayment from "@/component/atoms/savedPayment";
 import OtherPayment from "@/component/atoms/otherPayment";
+import CouponCode from "@/component/atoms/couponCode";
 
 const paymentListStatic = [
   {
@@ -123,6 +124,7 @@ const PaymentScreen = () => {
           />
           <SavedPayment paymentList={paymentListStatic} />
           <OtherPayment otherPaymentList={otherPaymentStatic} />
+          <CouponCode />
           <CustomButton
             onClick={() => handlePayClick()}
             style={{ marginTop: "1rem", width: "100%" }}
