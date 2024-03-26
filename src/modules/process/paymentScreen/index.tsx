@@ -5,7 +5,7 @@ import { processScreenRoutes } from "@/constants/allRoutes";
 import PaymentSuccess from "@/component/atoms/paymentSuccess";
 import styles from "./paymentScreen.module.scss";
 import OfferBox from "@/component/atoms/offerBox";
-import upiIcon from "@/images/upiIcon.svg";
+import upiIcon from "@/images/upiicon2.svg";
 import creditCardIcon from "@/images/creditCardIcon.svg";
 import CustomButton from "@/component/atoms/customButton";
 import SavedPayment from "@/component/atoms/savedPayment";
@@ -50,6 +50,49 @@ const paymentListStatic = [
   },
 ];
 
+const otherPaymentStatic = [
+  {
+    label: "UPI",
+    value: "UPI",
+    supportText: "PhonePe/Google Pay/BHIM/others",
+    icon: upiIcon,
+    type: "upi",
+  },
+  {
+    price: "233",
+    type: "sswallet",
+  },
+  {
+    label: "Credit Card / Debit Card",
+    value: "Credit Card / Debit Card",
+    supportText: "",
+    icon: upiIcon,
+    type: "normal",
+  },
+  {
+    type: "wallet",
+    data: [
+      {
+        label: "First Citizen",
+        value: "First Citizen",
+        price: "15690",
+        type: "normal",
+      },
+      {
+        label: "Gift Card/ E-Gift Voucher",
+        value: "Gift Card/ E-Gift Voucher",
+        type: "normal",
+      },
+    ],
+  },
+  {
+    label: "HDFC Credit Card",
+    value: "HDFC Credit Card3",
+    supportText: "**** 7269",
+    icon: creditCardIcon,
+  },
+];
+
 const PaymentScreen = () => {
   const [paymentSuccess, setPaymentSuccess] = useState(false);
   const router = useRouter();
@@ -79,7 +122,7 @@ const PaymentScreen = () => {
             }
           />
           <SavedPayment paymentList={paymentListStatic} />
-          <OtherPayment otherPaymentList={paymentListStatic} />
+          <OtherPayment otherPaymentList={otherPaymentStatic} />
           <CustomButton
             onClick={() => handlePayClick()}
             style={{ marginTop: "1rem", width: "100%" }}

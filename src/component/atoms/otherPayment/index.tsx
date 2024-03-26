@@ -11,54 +11,17 @@ import OtherPaymentInner from "./otherPaymentInner";
 import styles from "./otherPayment.module.scss";
 
 interface IProps {
-  otherPaymentList: {}[];
+  otherPaymentList: {
+    label?: string;
+    value?: string;
+    supportText?: string;
+    icon?: any;
+    price?: string;
+  }[];
 }
 
-const otherPaymentList: {
-  label: string;
-  value: string;
-  supportText: string;
-  icon?: any;
-}[] = [
-  {
-    label: "qw79012@oksbi",
-    value: "qw79012@oksbi1",
-    supportText: "",
-    // icon: upiIcon,
-  },
-  {
-    label: "HDFC Credit Card",
-    value: "HDFC Credit Card1",
-    supportText: "**** 7269",
-    // icon: creditCardIcon,
-  },
-  {
-    label: "qw79012@oksbi",
-    value: "qw79012@oksbi2",
-    supportText: "",
-    // icon: upiIcon,
-  },
-  {
-    label: "qw79012@oksbi",
-    value: "qw79012@oksbi3",
-    supportText: "",
-    // icon: upiIcon,
-  },
-  {
-    label: "HDFC Credit Card",
-    value: "HDFC Credit Card2",
-    supportText: "**** 7269",
-    // icon: creditCardIcon,
-  },
-  {
-    label: "HDFC Credit Card",
-    value: "HDFC Credit Card3",
-    supportText: "**** 7269",
-    // icon: creditCardIcon,
-  },
-];
-
 const OtherPayment = (props: IProps) => {
+  const { otherPaymentList } = props;
   const [value, setValue] = useState("female");
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -79,11 +42,10 @@ const OtherPayment = (props: IProps) => {
               onChange={handleChange}
             >
               {otherPaymentList.map((item, index) => {
-                const { value, ...rest } = item;
                 return (
                   <OtherPaymentInner
                     key={index}
-                    {...{ itemValue: value, ...rest }}
+                    {...{ itemValue: item?.value, ...item }}
                   />
                 );
               })}
