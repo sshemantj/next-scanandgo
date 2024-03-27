@@ -13,3 +13,7 @@ a {
   color: inherit;
   text-decoration: none;
 }
+
+.dashed-border {
+  border-bottom: 1px dashed #DBDBDB;
+}
