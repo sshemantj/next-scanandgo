@@ -1,11 +1,24 @@
 .showQrScreenWrapper {
-  margin-top: 5rem;
+  margin-top: 3rem;
   display: flex;
   align-items: center;
   flex-direction: column;
   .instruction {
     margin-top: 1rem;
-    width: 80%;
     text-align: center;
+    .success {
+      text-transform: uppercase;
+      font-weight: 500;
+      letter-spacing: 1px;
+      color: #737373;
+    }
+    .showText {
+      margin: 1rem 0;
+    }
+  }
+  .invoice {
+    margin-top: 2rem;
+    text-align: center;
+    font-size: 14px;
   }
 }

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import QRCode from "qrcode.react";
-import styles from "./showQrScreen.module.scss";
 import { useAppDispatch } from "@/store/hooks";
 import { hideBackNavbar } from "@/store/slices/menu";
+import styles from "./showQrScreen.module.scss";
 
 const ShowQrScreen = () => {
   const [inputValue, setInputValue] = useState("this is demo 323232");
@@ -14,9 +14,17 @@ const ShowQrScreen = () => {
 
   return (
     <div className={styles.showQrScreenWrapper}>
-      <QRCode value={inputValue} />
       <div className={styles.instruction}>
-        <h4>Show this QR code to the associate and you are done.</h4>
+        <p className={styles.success}>
+          Your order has been <br /> placed successfully.
+        </p>
+        <p className={styles.showText}>
+          Show this QR Code to the <br /> Store Associate & you’re all done!
+        </p>
+      </div>
+      <QRCode value={inputValue} />
+      <div className={styles.invoice}>
+        <p>Invoice will be shared on your mobile and email.</p>
       </div>
     </div>
   );
